@@ -26,15 +26,15 @@
      because the steps share a slope family, their RATIOS stay stable instead
      of crossing over (the old CSS mixed 5vw / 4.1vw / 3.2vw / fixed, which
      inverted the hierarchy below ~508px).
-       tagline  20 -> 32px
+       tagline  18 -> 28px
        wordmark 21 -> 34px   largest
-       body     15 -> 20px
+       body     14 -> 18px
        small    14 -> 17px   contact + footer, the smallest step
      ------------------------------------------------------------------- */
   :root {
-    --fs-tagline:  clamp(1.250rem, 1.036rem + 1.07vw, 2.000rem);
+    --fs-tagline:  clamp(1.125rem, 0.946rem + 0.89vw, 1.750rem);
     --fs-wordmark: clamp(1.300rem, 1.080rem + 1.16vw, 2.125rem);
-    --fs-body:     clamp(0.938rem, 0.848rem + 0.45vw, 1.250rem);
+    --fs-body:     clamp(0.875rem, 0.804rem + 0.36vw, 1.125rem);
     --fs-small:    clamp(0.875rem, 0.821rem + 0.27vw, 1.063rem);
   }
 
