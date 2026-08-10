@@ -29,13 +29,15 @@
        tagline  18 -> 28px
        wordmark 21 -> 34px   largest
        body     14 -> 18px
-       small    14 -> 17px   contact + footer, the smallest step
+       small    14 -> 17px   contact
+       footer   12 -> 14px   the smallest step
      ------------------------------------------------------------------- */
   :root {
     --fs-tagline:  clamp(1.125rem, 0.946rem + 0.89vw, 1.750rem);
     --fs-wordmark: clamp(1.300rem, 1.080rem + 1.16vw, 2.125rem);
     --fs-body:     clamp(0.875rem, 0.804rem + 0.36vw, 1.125rem);
     --fs-small:    clamp(0.875rem, 0.821rem + 0.27vw, 1.063rem);
+    --fs-footer:   clamp(0.750rem, 0.714rem + 0.18vw, 0.875rem);
   }
 
   html, body { height: 100%; }
@@ -137,7 +139,7 @@
     background: #0B1B45;
     color: #C7D3EC;
     text-align: center;
-    font-size: var(--fs-small);
+    font-size: var(--fs-footer);
     line-height: 1.5;
     padding: 1rem;
   }
