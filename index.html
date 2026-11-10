@@ -117,6 +117,16 @@ h3{font-size:var(--m);line-height:1.25;font-weight:600;letter-spacing:-.015em}
 .hero-media::after{background:#1E46D8}
 .hero-media::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,#05577A,#034D6B 50%,#01364D);filter:var(--grade)}
 .hero-img{object-position:50% 100%;transform-origin:50% 0;transform:translate3d(var(--tx,35.5%),var(--y,0px),0) scale(var(--z,1.15));-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 30%);mask-image:linear-gradient(90deg,transparent 0,#000 30%);will-change:transform}
+/* Desktop: place the ship by its own position in the photo (centre 50.5% across, 40% down, 27% of the width long),
+   so it sits at the same spot of the hero at every window size: centred 81% across and 36% down, 30% of the hero wide. */
+@media (min-width:821px){@supports (width:1cqw){
+  .hero-media{container-type:size}
+  .hero-media .hero-img{--cx:81cqw;--wide:111cqw;--w:max(min(var(--wide),333cqh),40cqw);--l:calc(var(--cx) - .505*var(--w));position:absolute;left:var(--l);top:calc(36cqh - .2667*var(--w));width:var(--w);height:auto;max-width:none;transform:translate3d(0,var(--y,0px),0);
+    -webkit-mask-image:linear-gradient(90deg,transparent max(0px,calc(40cqw - var(--l))),#000 max(14%,calc(62cqw - var(--l)))),linear-gradient(180deg,transparent 0,#000 16%,#000 70%,transparent 100%);
+    mask-image:linear-gradient(90deg,transparent max(0px,calc(40cqw - var(--l))),#000 max(14%,calc(62cqw - var(--l)))),linear-gradient(180deg,transparent 0,#000 16%,#000 70%,transparent 100%);
+    -webkit-mask-composite:source-in;mask-composite:intersect}
+  @media (max-width:1100px){.hero-media .hero-img{--cx:83cqw;--wide:96cqw}} /* smaller windows: a slightly smaller ship, clear of the headline */
+}}
 .hero .shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(4,24,43,.25) 0,rgba(4,24,43,0) 28%,rgba(4,24,43,.94) 100%)}
 .hero-in,.hero-stats{position:relative;z-index:1;width:100%}
 .hero h1{max-width:10.5em}
