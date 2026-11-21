@@ -316,10 +316,15 @@ h3{font-size:var(--m);line-height:1.25;font-weight:600;letter-spacing:-.015em}
 
 /* the opportunity */
 .mech{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:clamp(1.5rem,4vw,3.5rem);align-items:center}
-.eqv{display:grid;gap:.35rem}
-.eqv>div{display:grid;grid-template-columns:minmax(0,3.1em) minmax(0,1fr);gap:1.25rem;align-items:center;font-size:var(--xl)}
-.eqv span{font-size:var(--s);color:var(--muted)}
-.eqv>em{font-style:normal;font-size:var(--l);line-height:1;color:var(--blue)}
+.eqv{display:grid;gap:.5rem}
+.eqv>div{display:grid;grid-template-columns:2.75em auto minmax(0,1fr);column-gap:clamp(.9rem,1.6vw,1.25rem);align-items:center;font-size:var(--l)}
+.eqv .num{font-size:inherit}
+.eqv span{font-size:var(--m);font-weight:500;line-height:1.2;letter-spacing:-.01em;color:var(--ink)}
+.eqv .res span{color:var(--blue);font-weight:600}
+.eqi{display:grid;place-items:center;width:clamp(2.75rem,2.3rem + 1.2vw,3.25rem);aspect-ratio:1;border-radius:28%;background:linear-gradient(145deg,#4F7CFF,#0B2A78);box-shadow:inset 0 1px 0 rgba(255,255,255,.4),inset 0 0 0 1px rgba(255,255,255,.08),0 .7rem 1.4rem -.5rem rgba(36,82,255,.55)}
+.eqi svg{width:62%;height:62%;fill:none;stroke:#fff;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.res .eqi{background:linear-gradient(145deg,#8FAEFF,#2452FF 55%,#1636B8);box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 0 0 .3rem rgba(36,82,255,.12),0 .8rem 1.6rem -.5rem rgba(36,82,255,.7)}
+.eqv>em{font-style:normal;font-size:var(--m);line-height:1;color:var(--blue);width:calc(2.75 * var(--l));text-align:center}
 .eqv .res .num{color:var(--blue)}
 .area{background:var(--mist);border-radius:var(--R);padding:clamp(1rem,2.5vw,1.75rem)}
 .area svg{display:block;width:100%;max-width:27rem;height:auto;margin-inline:auto}
@@ -699,11 +704,11 @@ h3{font-size:var(--m);line-height:1.25;font-weight:600;letter-spacing:-.015em}
 <div class="sub block reveal"><i>1</i><div><p>The equation</p><h3>More cargo, travelling farther.</h3></div></div>
 <div class="mech">
 <div class="eqv">
-<div class="reveal"><b class="num" data-to="13" data-pre="+" data-suf="%">+13%</b><span>Cargo</span></div>
+<div class="reveal"><b class="num" data-to="13" data-pre="+" data-suf="%">+13%</b><i class="eqi" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 19.5h18"/><path d="M4.8 19.5c1.7-5.2 4.2-8.2 7.2-8.2s5.5 3 7.2 8.2"/><path d="M9.2 7.2v.1M12 4.6v.1M14.8 7.2v.1"/></svg></i><span>Cargo</span></div>
 <em class="reveal" style="--d:.1s" aria-label="times">&#215;</em>
-<div class="reveal" style="--d:.2s"><b class="num" data-to="6" data-pre="+" data-suf="%">+6%</b><span>Distance</span></div>
+<div class="reveal" style="--d:.2s"><b class="num" data-to="6" data-pre="+" data-suf="%">+6%</b><i class="eqi" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="5.5" cy="18" r="2.2"/><path d="M7.8 17.2c3.8-.6 3.6-5.6 7-5.9" stroke-dasharray="1.6 2.4"/><path d="M18 2.8a3.6 3.6 0 0 0-3.6 3.6c0 2.7 3.6 5.6 3.6 5.6s3.6-2.9 3.6-5.6A3.6 3.6 0 0 0 18 2.8z"/><path d="M18 6.4v.1"/></svg></i><span>Distance</span></div>
 <em class="reveal" style="--d:.3s" aria-label="equals">=</em>
-<div class="res reveal" style="--d:.4s"><b class="num" data-to="20" data-pre="+" data-suf="%">+20%</b><span>Shipping demand</span></div>
+<div class="res reveal" style="--d:.4s"><b class="num" data-to="20" data-pre="+" data-suf="%">+20%</b><i class="eqi" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M2.5 15h19l-2.4 4.5H4.9z"/><path d="M4.8 15v-4.2h3.8V15M11 15v-2h8v2"/><path d="M12.5 8.2l5-5M13.6 3.2h3.9v3.9"/></svg></i><span>Shipping demand</span></div>
 </div>
 <figure class="area reveal" style="--d:.2s">
 <svg viewBox="0 8 352 368" role="img" aria-label="Shipping demand is cargo multiplied by distance. The white square is 2022. The blue rectangle behind it is 2027: 13 percent more cargo and 6 percent more distance give 20 percent more tonne-miles">
@@ -865,6 +870,12 @@ $$('[data-ch]').forEach(s=>spy.observe(s));
 
 /* Looping animations run only while their section is on screen */
 if(!still){const po=new IntersectionObserver(es=>es.forEach(e=>e.target.classList.toggle('paused',!e.isIntersecting)),{rootMargin:'120px 0px'});$$('header.hero,section,footer').forEach(el=>po.observe(el))}
+
+/* Contact links land where the email address is in view, with as much of the globe above it as fits */
+const toContact=smooth=>{const h=$('#contact h2'),r=$('#contact .risk');if(!h||!r)return false;const nav=$('.nav').offsetHeight,y=scrollY,
+ top=h.getBoundingClientRect().top+y-nav-24,end=r.getBoundingClientRect().bottom+y-innerHeight+32;scrollTo({top:Math.max(0,Math.min(top,end)),behavior:smooth&&!still?'smooth':'auto'});return true};
+$$('a[href="#contact"]').forEach(a=>a.addEventListener('click',e=>{if(toContact(true)){e.preventDefault();history.pushState(null,'','#contact')}}));
+if(location.hash=='#contact')addEventListener('load',()=>toContact(false));
 
 /* Cargo: one need at a time */
 const ctabs=$('#cargo-tabs'),ctiles=$('#cargo-tiles');
