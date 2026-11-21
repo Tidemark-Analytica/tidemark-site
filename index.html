@@ -28,9 +28,9 @@
   --serif:Georgia,"Palatino Linotype","Times New Roman",serif;
   --xl:clamp(2.6rem,1.4rem + 4.3vw,5rem);
   --l:clamp(1.9rem,1.3rem + 2.6vw,3.4rem);
-  --m:clamp(1.2rem,1.06rem + .6vw,1.55rem);
-  --s:1.0625rem;
-  --xs:.875rem;
+  --m:clamp(1.3rem,1.12rem + .62vw,1.65rem);
+  --s:1.125rem;
+  --xs:.9375rem;
   --wrap:70rem; --gut:clamp(1.25rem,5vw,3rem); --pad:clamp(4.5rem,10vw,8.5rem); --r:1.25rem; --R:1.75rem;
   --ease:cubic-bezier(.2,.7,.2,1);
   /* photo grade: off by default (natural colour). The hero sets its own below. */
@@ -115,18 +115,16 @@ h3{font-size:var(--m);line-height:1.25;font-weight:600;letter-spacing:-.015em}
 .pie-on{fill:none;stroke:var(--sky);stroke-width:30;stroke-dasharray:46 100}
 .bars .axis{stroke:rgba(255,255,255,.55);stroke-width:1}
 .bars .b0{fill:rgba(255,255,255,.4)}
-.bars .b1{fill:var(--blue)}
-.bars .cap{fill:var(--sky)}
 .bars rect{transform-box:fill-box;transform-origin:50% 100%}
 .bars text{font-family:var(--mono);font-size:9.5px;fill:var(--on-dark)}
 .ships g{fill:#fff}
 .js .hero-stats .pie-on{stroke-dasharray:0 100;transition:stroke-dasharray 1.5s var(--ease) .35s}
 .js .hero-stats.in .pie-on{stroke-dasharray:46 100}
 .js .hero-stats .bars .b0,.js .hero-stats .bars .b1{transform:scaleY(0);transition:transform 1.1s var(--ease) .35s}
+.js .hero-stats .bars .ref{opacity:0;transition:opacity .6s var(--ease) 1.3s}
+.js .hero-stats.in .bars .ref{opacity:.85}
 .js .hero-stats .bars .b1{transition-delay:.55s}
-.js .hero-stats .bars .cap{opacity:0;transition:opacity .6s var(--ease) 1.4s}
 .js .hero-stats.in .bars .b0,.js .hero-stats.in .bars .b1{transform:none}
-.js .hero-stats.in .bars .cap{opacity:1}
 .js .hero-stats .ships g{opacity:0;transition:opacity .4s var(--ease);transition-delay:calc(.3s + var(--n)*.075s)}
 .js .hero-stats.in .ships g{opacity:1}
 
@@ -157,6 +155,21 @@ h3{font-size:var(--m);line-height:1.25;font-weight:600;letter-spacing:-.015em}
   #edge .eng-col:first-child::after{top:100%}
   #edge .eng-col:last-child::before{bottom:100%}
 }
+/* hero KPIs as three glass cards */
+.hero-stats{gap:clamp(.6rem,1.2vw,1rem);background:none;-webkit-backdrop-filter:none;backdrop-filter:none;box-shadow:none}
+.hero-stats>.st{position:relative;overflow:hidden;border-radius:var(--R);padding:clamp(1.1rem,2vw,1.5rem) clamp(1.1rem,2vw,1.6rem);background:linear-gradient(155deg,rgba(255,255,255,.17),rgba(255,255,255,.05) 50%,rgba(36,82,255,.18));-webkit-backdrop-filter:blur(20px) saturate(160%);backdrop-filter:blur(20px) saturate(160%);box-shadow:inset 0 1px 0 rgba(255,255,255,.35),inset 0 0 0 1px rgba(255,255,255,.14),0 1.75rem 3.5rem -1.75rem rgba(2,10,30,.85)}
+.hero-stats>.st::before{content:"";position:absolute;width:11rem;height:11rem;left:-3.2rem;top:50%;margin-top:-5.5rem;border-radius:50%;background:radial-gradient(circle,rgba(143,174,255,.34),transparent 68%);pointer-events:none}
+.hero-stats>.st+.st{border:0}
+.st .viz{position:relative;filter:drop-shadow(0 0 10px rgba(120,160,255,.5))}
+.st b,.st span{position:relative}
+.st span{text-wrap:pretty}
+.st b{background:linear-gradient(180deg,#fff 40%,var(--sky));-webkit-background-clip:text;background-clip:text;color:transparent}
+.pie-bg{fill:none;stroke:rgba(255,255,255,.16);stroke-width:9}
+.pie-on{fill:none;stroke:url(#kpiA);stroke-width:9}
+.pie-ship{fill:#fff}
+.bars .b0{fill:rgba(255,255,255,.38)}
+.bars .ref{stroke:#fff;stroke-width:1;stroke-dasharray:2 2;opacity:.85}
+.js .hero-stats .ships g{opacity:.2}
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   .js .reveal{opacity:1;transform:none;transition:none}
@@ -453,7 +466,7 @@ h3{font-size:var(--m);line-height:1.25;font-weight:600;letter-spacing:-.015em}
 .kpis span{font-size:var(--xs);color:var(--on-dark-muted)}
 .hint{font-size:var(--xs);color:var(--on-dark-muted);margin-top:.5rem;text-align:right}
 .cv{width:100%;height:auto;display:block;cursor:crosshair}
-.cv text{font-family:inherit;font-size:14px;fill:var(--on-dark-muted)}
+.cv text{font-family:inherit;font-size:15px;fill:var(--on-dark-muted)}
 .cv .g{stroke:var(--line-dark)}
 .cv .axis{stroke:#fff;stroke-width:1;opacity:.35}
 .cv .ln{fill:none;stroke:var(--sky);stroke-width:2.8;stroke-linejoin:round;stroke-linecap:round;filter:drop-shadow(0 0 6px rgba(36,82,255,.9))}
@@ -485,10 +498,10 @@ h3{font-size:var(--m);line-height:1.25;font-weight:600;letter-spacing:-.015em}
   .hero-img{--tx:0%;--z:1.3;transform-origin:50% 45%;object-position:52% 40%;-webkit-mask-image:none;mask-image:none}
   .hero .shade{background:linear-gradient(180deg,rgba(4,24,43,.25) 0,rgba(4,24,43,0) 7rem,var(--ink) 25rem)}
   .hero-stats{grid-template-columns:minmax(0,1fr)}
-  .hero-stats>.st{grid-template-columns:3.75rem 4.4rem minmax(0,1fr);column-gap:.8rem;padding-block:.9rem}
-  .st .viz{width:3.75rem;height:3.75rem;grid-row:1/3}
-  .st b{grid-column:2;grid-row:1/3}
-  .st span,.st small{grid-column:3}
+  .hero-stats>.st{grid-template-columns:clamp(3.5rem,16vw,4.25rem) minmax(0,1fr);column-gap:clamp(.8rem,3.5vw,1.1rem);row-gap:.15rem;padding-block:1rem}
+  .st .viz{width:clamp(3.5rem,16vw,4.25rem);height:auto;aspect-ratio:1;grid-row:1/3;align-self:center}
+  .st b{grid-column:2;grid-row:1;align-self:end}
+  .st span,.st small{grid-column:2;grid-row:2;align-self:start;margin-top:0}
   .hero-stats>div+div{border-left:0;border-top:1px solid rgba(255,255,255,.16)}
   .hero-stats span{margin-top:0}
   .steps,.bento,.vgrid,.ports,.needs,.grow,.engine,.mech,.longer,.proof,.dash-grid{grid-template-columns:minmax(0,1fr)}
@@ -540,9 +553,9 @@ h3{font-size:var(--m);line-height:1.25;font-weight:600;letter-spacing:-.015em}
 </div>
 </div>
 <div class="hero-stats wrap reveal">
-<div class="st"><svg class="viz pie" viewBox="0 0 64 64" role="img" aria-label="Pie chart: dry bulk is 46 percent of sea trade"><circle class="pie-bg" cx="32" cy="32" r="30"/><circle class="pie-on" cx="32" cy="32" r="15" pathLength="100" transform="rotate(-90 32 32)"/><circle class="pie-rim" cx="32" cy="32" r="30"/></svg><b data-to="46" data-suf="%">46%</b><span><i class="key" aria-hidden="true"></i>of everything shipped by sea is dry bulk</span><small>5.9bn of 12.9bn tonnes in 2025</small></div>
-<div class="st"><svg class="viz bars" viewBox="0 0 64 64" role="img" aria-label="Bar chart: shipping demand in 2027 is 20 percent above 2022"><path class="axis" d="M4 51.5h56"/><rect class="b0" x="10" y="17" width="18" height="34" rx="2"/><rect class="b1" x="36" y="10.2" width="18" height="40.8" rx="2"/><rect class="cap" x="36" y="10.2" width="18" height="6.8" rx="2"/><text x="19" y="62" text-anchor="middle">2022</text><text x="45" y="62" text-anchor="middle">2027</text></svg><b data-to="20" data-pre="+" data-suf="%">+20%</b><span>projected growth in shipping demand, 2022 to 2027</span><small>Tonne-miles: more cargo, travelling farther</small></div>
-<div class="st"><svg class="viz ships" viewBox="0 0 64 64" role="img" aria-label="Sixteen ship icons"><g transform="translate(0.0 6.0)" style="--n:0"><path d="M0 3.6h14l-2.2 3.4H2.2z"/><path d="M10.6.4h2.4v3.2h-2.4z"/><path d="M3 1.2h.7v2.4H3zM5.6 1.2h.7v2.4h-.7zM8.2 1.2h.7v2.4h-.7z"/></g><g transform="translate(16.6 6.0)" style="--n:1"><path d="M0 3.6h14l-2.2 3.4H2.2z"/><path d="M10.6.4h2.4v3.2h-2.4z"/><path d="M3 1.2h.7v2.4H3zM5.6 1.2h.7v2.4h-.7zM8.2 1.2h.7v2.4h-.7z"/></g><g transform="translate(33.2 6.0)" style="--n:2"><path d="M0 3.6h14l-2.2 3.4H2.2z"/><path d="M10.6.4h2.4v3.2h-2.4z"/><path d="M3 1.2h.7v2.4H3zM5.6 1.2h.7v2.4h-.7zM8.2 1.2h.7v2.4h-.7z"/></g><g transform="translate(49.8 6.0)" style="--n:3"><path d="M0 3.6h14l-2.2 3.4H2.2z"/><path d="M10.6.4h2.4v3.2h-2.4z"/><path d="M3 1.2h.7v2.4H3zM5.6 1.2h.7v2.4h-.7zM8.2 1.2h.7v2.4h-.7z"/></g><g transform="translate(0.0 21.5)" style="--n:4"><path d="M0 3.6h14l-2.2 3.4H2.2z"/><path d="M10.6.4h2.4v3.2h-2.4z"/><path d="M3 1.2h.7v2.4H3zM5.6 1.2h.7v2.4h-.7zM8.2 1.2h.7v2.4h-.7z"/></g><g transform="translate(16.6 21.5)" style="--n:5"><path d="M0 3.6h14l-2.2 3.4H2.2z"/><path d="M10.6.4h2.4v3.2h-2.4z"/><path d="M3 1.2h.7v2.4H3zM5.6 1.2h.7v2.4h-.7zM8.2 1.2h.7v2.4h-.7z"/></g><g transform="translate(33.2 21.5)" style="--n:6"><path d="M0 3.6h14l-2.2 3.4H2.2z"/><path d="M10.6.4h2.4v3.2h-2.4z"/><path d="M3 1.2h.7v2.4H3zM5.6 1.2h.7v2.4h-.7zM8.2 1.2h.7v2.4h-.7z"/></g><g transform="translate(49.8 21.5)" style="--n:7"><path d="M0 3.6h14l-2.2 3.4H2.2z"/><path d="M10.6.4h2.4v3.2h-2.4z"/><path d="M3 1.2h.7v2.4H3zM5.6 1.2h.7v2.4h-.7zM8.2 1.2h.7v2.4h-.7z"/></g><g transform="translate(0.0 37.0)" style="--n:8"><path d="M0 3.6h14l-2.2 3.4H2.2z"/><path d="M10.6.4h2.4v3.2h-2.4z"/><path d="M3 1.2h.7v2.4H3zM5.6 1.2h.7v2.4h-.7zM8.2 1.2h.7v2.4h-.7z"/></g><g transform="translate(16.6 37.0)" style="--n:9"><path d="M0 3.6h14l-2.2 3.4H2.2z"/><path d="M10.6.4h2.4v3.2h-2.4z"/><path d="M3 1.2h.7v2.4H3zM5.6 1.2h.7v2.4h-.7zM8.2 1.2h.7v2.4h-.7z"/></g><g transform="translate(33.2 37.0)" style="--n:10"><path d="M0 3.6h14l-2.2 3.4H2.2z"/><path d="M10.6.4h2.4v3.2h-2.4z"/><path d="M3 1.2h.7v2.4H3zM5.6 1.2h.7v2.4h-.7zM8.2 1.2h.7v2.4h-.7z"/></g><g transform="translate(49.8 37.0)" style="--n:11"><path d="M0 3.6h14l-2.2 3.4H2.2z"/><path d="M10.6.4h2.4v3.2h-2.4z"/><path d="M3 1.2h.7v2.4H3zM5.6 1.2h.7v2.4h-.7zM8.2 1.2h.7v2.4h-.7z"/></g><g transform="translate(0.0 52.5)" style="--n:12"><path d="M0 3.6h14l-2.2 3.4H2.2z"/><path d="M10.6.4h2.4v3.2h-2.4z"/><path d="M3 1.2h.7v2.4H3zM5.6 1.2h.7v2.4h-.7zM8.2 1.2h.7v2.4h-.7z"/></g><g transform="translate(16.6 52.5)" style="--n:13"><path d="M0 3.6h14l-2.2 3.4H2.2z"/><path d="M10.6.4h2.4v3.2h-2.4z"/><path d="M3 1.2h.7v2.4H3zM5.6 1.2h.7v2.4h-.7zM8.2 1.2h.7v2.4h-.7z"/></g><g transform="translate(33.2 52.5)" style="--n:14"><path d="M0 3.6h14l-2.2 3.4H2.2z"/><path d="M10.6.4h2.4v3.2h-2.4z"/><path d="M3 1.2h.7v2.4H3zM5.6 1.2h.7v2.4h-.7zM8.2 1.2h.7v2.4h-.7z"/></g><g transform="translate(49.8 52.5)" style="--n:15"><path d="M0 3.6h14l-2.2 3.4H2.2z"/><path d="M10.6.4h2.4v3.2h-2.4z"/><path d="M3 1.2h.7v2.4H3zM5.6 1.2h.7v2.4h-.7zM8.2 1.2h.7v2.4h-.7z"/></g></svg><b data-to="16">16</b><span>ship purchases and sales completed as an owner</span><small>Founders&#8217; track record</small></div>
+<div class="st"><svg class="viz pie" viewBox="0 0 64 64" role="img" aria-label="Donut chart: dry bulk is 46 percent of sea trade"><defs><linearGradient id="kpiA" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#E4ECFF"/><stop offset="1" stop-color="#5C84FF"/></linearGradient></defs><circle class="pie-bg" cx="32" cy="32" r="25"/><circle class="pie-on" cx="32" cy="32" r="25" pathLength="100" transform="rotate(-90 32 32)" stroke="url(#kpiA)"/><g class="pie-ship" transform="translate(22.2 27.4) scale(1.4)"><path d="M0 3.6h14l-2.2 3.4H2.2z"/><path d="M10.6.4h2.4v3.2h-2.4z"/><path d="M3 1.2h.7v2.4H3zM5.6 1.2h.7v2.4h-.7zM8.2 1.2h.7v2.4h-.7z"/></g></svg><b data-to="46" data-suf="%">46%</b><span><i class="key" aria-hidden="true"></i>of sea trade is dry bulk</span></div>
+<div class="st"><svg class="viz bars" viewBox="0 0 64 64" role="img" aria-label="Bar chart: shipping demand in 2027 is 20 percent above 2022"><defs><linearGradient id="kpiB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C9D8FF"/><stop offset="1" stop-color="#2452FF"/></linearGradient></defs><path class="axis" d="M4 51.5h56"/><rect class="b0" x="10" y="17" width="18" height="34" rx="3"/><rect class="b1" x="36" y="10.2" width="18" height="40.8" rx="3" fill="url(#kpiB)"/><path class="ref" d="M8 17h48"/><text x="19" y="62" text-anchor="middle">2022</text><text x="45" y="62" text-anchor="middle">2027</text></svg><b data-to="20" data-pre="+" data-suf="%">+20%</b><span>projected growth in shipping demand by 2027</span></div>
+<div class="st"><svg class="viz ships" viewBox="0 0 64 64" role="img" aria-label="Sixteen ship icons"><g transform="translate(0.0 6.0)" style="--n:0"><path d="M0 3.6h14l-2.2 3.4H2.2z"/><path d="M10.6.4h2.4v3.2h-2.4z"/><path d="M3 1.2h.7v2.4H3zM5.6 1.2h.7v2.4h-.7zM8.2 1.2h.7v2.4h-.7z"/></g><g transform="translate(16.6 6.0)" style="--n:1"><path d="M0 3.6h14l-2.2 3.4H2.2z"/><path d="M10.6.4h2.4v3.2h-2.4z"/><path d="M3 1.2h.7v2.4H3zM5.6 1.2h.7v2.4h-.7zM8.2 1.2h.7v2.4h-.7z"/></g><g transform="translate(33.2 6.0)" style="--n:2"><path d="M0 3.6h14l-2.2 3.4H2.2z"/><path d="M10.6.4h2.4v3.2h-2.4z"/><path d="M3 1.2h.7v2.4H3zM5.6 1.2h.7v2.4h-.7zM8.2 1.2h.7v2.4h-.7z"/></g><g transform="translate(49.8 6.0)" style="--n:3"><path d="M0 3.6h14l-2.2 3.4H2.2z"/><path d="M10.6.4h2.4v3.2h-2.4z"/><path d="M3 1.2h.7v2.4H3zM5.6 1.2h.7v2.4h-.7zM8.2 1.2h.7v2.4h-.7z"/></g><g transform="translate(0.0 21.5)" style="--n:4"><path d="M0 3.6h14l-2.2 3.4H2.2z"/><path d="M10.6.4h2.4v3.2h-2.4z"/><path d="M3 1.2h.7v2.4H3zM5.6 1.2h.7v2.4h-.7zM8.2 1.2h.7v2.4h-.7z"/></g><g transform="translate(16.6 21.5)" style="--n:5"><path d="M0 3.6h14l-2.2 3.4H2.2z"/><path d="M10.6.4h2.4v3.2h-2.4z"/><path d="M3 1.2h.7v2.4H3zM5.6 1.2h.7v2.4h-.7zM8.2 1.2h.7v2.4h-.7z"/></g><g transform="translate(33.2 21.5)" style="--n:6"><path d="M0 3.6h14l-2.2 3.4H2.2z"/><path d="M10.6.4h2.4v3.2h-2.4z"/><path d="M3 1.2h.7v2.4H3zM5.6 1.2h.7v2.4h-.7zM8.2 1.2h.7v2.4h-.7z"/></g><g transform="translate(49.8 21.5)" style="--n:7"><path d="M0 3.6h14l-2.2 3.4H2.2z"/><path d="M10.6.4h2.4v3.2h-2.4z"/><path d="M3 1.2h.7v2.4H3zM5.6 1.2h.7v2.4h-.7zM8.2 1.2h.7v2.4h-.7z"/></g><g transform="translate(0.0 37.0)" style="--n:8"><path d="M0 3.6h14l-2.2 3.4H2.2z"/><path d="M10.6.4h2.4v3.2h-2.4z"/><path d="M3 1.2h.7v2.4H3zM5.6 1.2h.7v2.4h-.7zM8.2 1.2h.7v2.4h-.7z"/></g><g transform="translate(16.6 37.0)" style="--n:9"><path d="M0 3.6h14l-2.2 3.4H2.2z"/><path d="M10.6.4h2.4v3.2h-2.4z"/><path d="M3 1.2h.7v2.4H3zM5.6 1.2h.7v2.4h-.7zM8.2 1.2h.7v2.4h-.7z"/></g><g transform="translate(33.2 37.0)" style="--n:10"><path d="M0 3.6h14l-2.2 3.4H2.2z"/><path d="M10.6.4h2.4v3.2h-2.4z"/><path d="M3 1.2h.7v2.4H3zM5.6 1.2h.7v2.4h-.7zM8.2 1.2h.7v2.4h-.7z"/></g><g transform="translate(49.8 37.0)" style="--n:11"><path d="M0 3.6h14l-2.2 3.4H2.2z"/><path d="M10.6.4h2.4v3.2h-2.4z"/><path d="M3 1.2h.7v2.4H3zM5.6 1.2h.7v2.4h-.7zM8.2 1.2h.7v2.4h-.7z"/></g><g transform="translate(0.0 52.5)" style="--n:12"><path d="M0 3.6h14l-2.2 3.4H2.2z"/><path d="M10.6.4h2.4v3.2h-2.4z"/><path d="M3 1.2h.7v2.4H3zM5.6 1.2h.7v2.4h-.7zM8.2 1.2h.7v2.4h-.7z"/></g><g transform="translate(16.6 52.5)" style="--n:13"><path d="M0 3.6h14l-2.2 3.4H2.2z"/><path d="M10.6.4h2.4v3.2h-2.4z"/><path d="M3 1.2h.7v2.4H3zM5.6 1.2h.7v2.4h-.7zM8.2 1.2h.7v2.4h-.7z"/></g><g transform="translate(33.2 52.5)" style="--n:14"><path d="M0 3.6h14l-2.2 3.4H2.2z"/><path d="M10.6.4h2.4v3.2h-2.4z"/><path d="M3 1.2h.7v2.4H3zM5.6 1.2h.7v2.4h-.7zM8.2 1.2h.7v2.4h-.7z"/></g><g transform="translate(49.8 52.5)" style="--n:15"><path d="M0 3.6h14l-2.2 3.4H2.2z"/><path d="M10.6.4h2.4v3.2h-2.4z"/><path d="M3 1.2h.7v2.4H3zM5.6 1.2h.7v2.4h-.7zM8.2 1.2h.7v2.4h-.7z"/></g></svg><b data-to="16">16</b><span>ship purchases and sales by our founders</span></div>
 </div>
 </section>
 
@@ -554,20 +567,20 @@ h3{font-size:var(--m);line-height:1.25;font-weight:600;letter-spacing:-.015em}
 <article class="step lift reveal">
 <div class="shot"><div class="ph"><img loading="lazy" decoding="async" src="assets/6a843ff74143.jpg" alt="A bulk carrier with its own cranes alongside a quay"></div><span class="idx">01</span></div>
 <h3>Buy</h3>
-<p class="role t"><u>We</u><span>Find the ship in a private market, through trusted brokers.</span></p>
+<p class="role t"><u>We</u><span>Source the ship privately, through trusted brokers.</span></p>
 <p class="role"><u>You</u><span>Invest in specific vessels through a dedicated vehicle.</span></p>
 </article>
 <article class="step lift reveal" style="--d:.1s">
 <div class="shot"><div class="ph"><img loading="lazy" decoding="async" src="assets/b72fed2e3269.jpg" alt="A bulk carrier at anchor"></div><span class="idx">02</span></div>
 <h3>Operate</h3>
-<p class="role t"><u>We</u><span>Run the ship: crew, maintenance and chartering.</span></p>
+<p class="role t"><u>We</u><span>Run it: crew, maintenance, chartering.</span></p>
 <p class="role"><u>You</u><span>Receive your share of the operating surplus, distributed regularly.</span></p>
 </article>
 <article class="step lift reveal" style="--d:.2s">
 <div class="shot"><div class="ph"><img loading="lazy" decoding="async" src="assets/abd3a5fd6a5f.jpg" alt="A bulk carrier with its own cranes at a grain terminal, seen from above"></div><span class="idx">03</span></div>
 <h3>Sell</h3>
 <p class="role t"><u>We</u><span>Time the exit: sale or scrap.</span></p>
-<p class="role"><u>You</u><span>Take the proceeds: your share of the sale or scrap.</span></p>
+<p class="role"><u>You</u><span>Receive your share of the proceeds.</span></p>
 </article>
 </div>
 </div>
@@ -576,24 +589,24 @@ h3{font-size:var(--m);line-height:1.25;font-weight:600;letter-spacing:-.015em}
 <section class="sec dark" id="edge" data-ch="edge">
 <div class="wrap">
 <p class="eyebrow reveal">Our approach</p>
-<h2 class="reveal">Hands-on shipping experience, combined with a proprietary AI-driven engine.</h2>
-<p class="lead reveal">Every opportunity is assessed twice: by people who have owned and operated ships, and by an engine that integrates a wealth of market information.</p>
+<h2 class="reveal">Shipping experience, combined with a proprietary AI-driven engine.</h2>
+<p class="lead reveal">Every opportunity is assessed twice: by seasoned ship owners and by our engine.</p>
 <div class="engine block reveal">
 <div class="eng-col">
-<div class="node"><small>People</small><b>Know-how and network</b><span>Founders who have owned and operated ships, working with trusted brokers.</span></div>
-<div class="node"><small>Data</small><b>Market information</b><span>A wealth of market data, integrated in one proprietary engine.</span></div>
+<div class="node"><small>People</small><b>Know-how and network</b><span>Founders&#8217; ship-owning experience and broker network.</span></div>
+<div class="node"><small>Data</small><b>Market information</b><span>A wealth of market data in one engine.</span></div>
 </div>
 <svg class="flow" viewBox="0 0 100 200" preserveAspectRatio="none" aria-hidden="true"><path d="M0 50C55 50 45 100 100 100"/><path d="M0 150C55 150 45 100 100 100"/><path class="glow" d="M0 50C55 50 45 100 100 100"/><path class="glow" d="M0 150C55 150 45 100 100 100"/><path class="pulse" d="M0 50C55 50 45 100 100 100"/><path class="pulse" d="M0 150C55 150 45 100 100 100"/></svg>
 <div class="orb"><i class="ring ra" aria-hidden="true"></i><i class="ring rb" aria-hidden="true"></i><b><small>Proprietary</small>AI-driven engine</b></div>
 <svg class="flow out" viewBox="0 0 100 200" preserveAspectRatio="none" aria-hidden="true"><path d="M0 100C55 100 45 50 100 50"/><path d="M0 100C55 100 45 150 100 150"/><path class="glow" d="M0 100C55 100 45 50 100 50"/><path class="glow" d="M0 100C55 100 45 150 100 150"/><path class="pulse" d="M0 100C55 100 45 50 100 50"/><path class="pulse" d="M0 100C55 100 45 150 100 150"/></svg>
 <div class="eng-col">
-<div class="node out"><small>Upside</small><b>Identify opportunities</b><span>Screen the market and recognise the right vessels early.</span></div>
+<div class="node out"><small>Upside</small><b>Identify opportunities</b><span>Spot the right vessels early.</span></div>
 <div class="node out"><small>Downside</small><b>Manage risk</b><span>Price each vessel with discipline.</span></div>
 </div>
 </div>
 <div class="proof reveal">
 <p>Founders&#8217; track record</p>
-<div><b data-to="16">16</b><span>ship purchases and sales completed as an owner</span></div>
+<div><b data-to="16">16</b><span>ship purchases and sales as owners</span></div>
 <div><b data-to="10" data-suf="+">10+</b><span>years operating vessels</span></div>
 </div>
 </div>
@@ -605,23 +618,23 @@ h3{font-size:var(--m);line-height:1.25;font-weight:600;letter-spacing:-.015em}
 <h2 class="reveal">Dry bulk ships carry the world&#8217;s raw materials.</h2>
 <p class="lead reveal">Grain, ore, fertiliser and cement, carried in bulk.</p>
 
-<div class="sub block reveal"><i>1</i><div><p>The ships</p><h3>Three ship types carry most of the world&#8217;s trade by sea.</h3></div></div>
+<div class="sub block reveal"><i>1</i><div><p>The ships</p><h3>Three ship types carry most sea trade.</h3></div></div>
 <div class="bento">
 <figure class="kind us wide lift reveal">
 <div class="ph"><img loading="lazy" decoding="async" src="assets/b5d8311db9a9.jpg" alt="A bulk carrier with its own cranes beside stockpiles of cargo, seen from above"></div>
-<figcaption><b>Dry bulk ships</b><em class="tag">Tidemark focus</em><span>Raw materials carried in bulk. The ship&#8217;s own cranes lift the cargo out, even where a port has none.</span></figcaption>
+<figcaption><b>Dry bulk ships</b><em class="tag">Tidemark focus</em><span>Loose raw materials. Their own cranes unload where ports have none.</span></figcaption>
 </figure>
 <figure class="kind lift reveal" style="--d:.1s">
 <div class="ph"><img loading="lazy" decoding="async" src="assets/a35a1c8ef5fd.jpg" alt="A container ship, seen from above"></div>
-<figcaption><b>Container ships</b><span>Boxes of finished goods: phones, clothes, furniture.</span></figcaption>
+<figcaption><b>Container ships</b><span>Finished goods in boxes.</span></figcaption>
 </figure>
 <figure class="kind lift reveal" style="--d:.2s">
 <div class="ph"><img loading="lazy" decoding="async" src="assets/bc54d047facc.jpg" alt="A tanker, seen from above"></div>
-<figcaption><b>Tankers</b><span>Liquids pumped aboard: oil, gas, chemicals.</span></figcaption>
+<figcaption><b>Tankers</b><span>Oil, gas and chemicals.</span></figcaption>
 </figure>
 </div>
 
-<div class="sub block reveal"><i>2</i><div><p>The scale</p><h3>Nearly half of everything shipped by sea is dry bulk, and volumes have grown 2.6 times since 2000.</h3></div></div>
+<div class="sub block reveal"><i>2</i><div><p>The scale</p><h3>Nearly half of sea trade is dry bulk, 2.6 times the volume of 2000.</h3></div></div>
 <div class="bento">
 <div class="card wide share reveal" role="img" aria-label="Dry bulk is 46 percent of sea trade: 5.9 billion of 12.9 billion tonnes in 2025">
 <b class="num" data-to="46" data-suf="%">46%</b>
@@ -629,7 +642,7 @@ h3{font-size:var(--m);line-height:1.25;font-weight:600;letter-spacing:-.015em}
 <div class="share-bar"><i>5.9bn tonnes</i><u>of 12.9bn in 2025</u></div>
 </div>
 <div class="card wide grow reveal" style="--d:.1s">
-<div><b class="num" data-to="2.6" data-dec="1" data-suf="&#215;">2.6&#215;</b><span>the dry bulk cargo of 2000</span></div>
+<div><b class="num" data-to="2.6" data-dec="1" data-suf="&#215;">2.6&#215;</b><span>the volume of 2000</span></div>
 <div class="mini" role="img" aria-label="Dry bulk cargo: 2.3 billion tonnes in 2000, 3.8 billion in 2010, 5.9 billion in 2025">
 <div><b>2.3bn</b><i style="--h:39%"></i>2000</div>
 <div><b>3.8bn</b><i style="--h:64%"></i>2010</div>
@@ -637,14 +650,14 @@ h3{font-size:var(--m);line-height:1.25;font-weight:600;letter-spacing:-.015em}
 </div>
 </div>
 </div>
-<p class="src reveal">Tonnes shipped by sea. Clarksons Research.</p>
+<p class="src reveal">Clarksons Research.</p>
 </div>
 </section>
 
 <section class="sec" id="cargo" data-ch="dry">
 <div class="wrap">
 <div class="sub reveal"><i>3</i><div><p>The cargo</p><h3>20+ cargo types, serving food, housing and infrastructure.</h3></div></div>
-<p class="note reveal">Every major dry bulk cargo serves one of three essential needs, which grow with population and living standards.</p>
+<p class="note reveal">Demand grows with population and living standards.</p>
 <div class="reveal">
 <div class="seg" id="cargo-tabs" role="group" aria-label="Choose a need"></div>
 <div class="tiles" id="cargo-tiles"></div>
@@ -655,7 +668,7 @@ h3{font-size:var(--m);line-height:1.25;font-weight:600;letter-spacing:-.015em}
 <section class="sec dark" id="voyage" data-ch="dry">
 <div class="wrap">
 <div class="sub reveal"><i>4</i><div><p>The voyage</p><h3>Each cargo follows its own trade route.</h3></div></div>
-<p class="note reveal">Select a cargo to see an example voyage.</p>
+<p class="note reveal">Pick a cargo.</p>
 <div class="reveal">
 <div class="seg" id="vpick" role="group" aria-label="Choose a cargo"></div>
 <div class="vgrid">
@@ -682,7 +695,7 @@ h3{font-size:var(--m);line-height:1.25;font-weight:600;letter-spacing:-.015em}
 <div class="vtabs" id="vtabs"></div>
 </div>
 </div>
-<p class="src reveal">Example voyages for the largest cargoes. Sea routes and distances are modelled at 12 knots.</p>
+<p class="src reveal">Illustrative voyages, modelled at 12 knots.</p>
 </div>
 </section>
 
@@ -694,11 +707,11 @@ h3{font-size:var(--m);line-height:1.25;font-weight:600;letter-spacing:-.015em}
 <div class="sub block reveal"><i>1</i><div><p>The equation</p><h3>More cargo, travelling farther.</h3></div></div>
 <div class="mech">
 <div class="eqv">
-<div class="reveal"><b class="num" data-to="13" data-pre="+" data-suf="%">+13%</b><span>Cargo, tonnes</span></div>
+<div class="reveal"><b class="num" data-to="13" data-pre="+" data-suf="%">+13%</b><span>Cargo</span></div>
 <em class="reveal" style="--d:.1s" aria-label="times">&#215;</em>
-<div class="reveal" style="--d:.2s"><b class="num" data-to="6" data-pre="+" data-suf="%">+6%</b><span>Average distance per tonne</span></div>
+<div class="reveal" style="--d:.2s"><b class="num" data-to="6" data-pre="+" data-suf="%">+6%</b><span>Distance</span></div>
 <em class="reveal" style="--d:.3s" aria-label="equals">=</em>
-<div class="res reveal" style="--d:.4s"><b class="num" data-to="20" data-pre="+" data-suf="%">+20%</b><span>Shipping demand, tonne-miles</span></div>
+<div class="res reveal" style="--d:.4s"><b class="num" data-to="20" data-pre="+" data-suf="%">+20%</b><span>Shipping demand</span></div>
 </div>
 <figure class="area reveal" style="--d:.2s">
 <svg viewBox="0 8 352 368" role="img" aria-label="Shipping demand is cargo multiplied by distance. The white square is 2022. The blue rectangle behind it is 2027: 13 percent more cargo and 6 percent more distance give 20 percent more tonne-miles">
@@ -716,10 +729,10 @@ h3{font-size:var(--m);line-height:1.25;font-weight:600;letter-spacing:-.015em}
 <text class="ar-b" x="325.200" y="364" text-anchor="middle">+6%</text>
 <text x="198" y="40" text-anchor="middle"><tspan class="ar-b ar-r">+20%</tspan><tspan class="ar-s" dx="7">tonne-miles</tspan></text>
 </svg>
-<figcaption>Tonne-miles are tonnes multiplied by distance. White is 2022, blue is 2027. Drawn to scale.</figcaption>
+<figcaption>Drawn to scale.</figcaption>
 </figure>
 </div>
-<p class="src reveal">Cumulative growth, 2022 to 2027. Clarksons Research projection.</p>
+<p class="src reveal">2022 to 2027. Clarksons Research projection.</p>
 
 </div>
 </section>
@@ -727,17 +740,17 @@ h3{font-size:var(--m);line-height:1.25;font-weight:600;letter-spacing:-.015em}
 <section class="sec dark" id="growth" data-ch="why">
 <div class="wrap">
 <div class="sub reveal"><i>2</i><div><p>More cargo</p><h3>Africa and Asia account for 92% of world population growth to 2030.</h3></div></div>
-<p class="note reveal">The two regions add 310 million people by 2030. New demand for food, housing and infrastructure arrives by sea.</p>
+<p class="note reveal">+310 million people by 2030. Their food, housing and infrastructure arrive by sea.</p>
 <div class="needs">
 <div class="need reveal"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M20 37V11"/><path d="M20 12c-3.500-1-5.500-3.500-5.500-8 3.500 1 5.500 3.500 5.500 8zM20 12c3.500-1 5.500-3.500 5.500-8-3.500 1-5.500 3.500-5.500 8z"/><path d="M20 21c-4-.5-7-3-7.500-7.500 4 .5 7 3 7.500 7.500zM20 21c4-.5 7-3 7.500-7.500-4 .5-7 3-7.500 7.500z"/><path d="M20 30c-4-.5-7-3-7.500-7.500 4 .5 7 3 7.500 7.500zM20 30c4-.5 7-3 7.500-7.500-4 .5-7 3-7.500 7.500z"/></svg><p class="eyebrow">Food</p><b class="num" data-to="13" data-pre="~" data-suf="%">~13%</b><span>more wheat and protein meal imports by 2030</span>
 <div class="vs"><div><u>2025</u><i style="--w:88.750%"></i><b>213</b></div><div class="hi"><u>2030</u><i style="--w:100%"></i><b>240</b></div></div>
-<small>Million tonnes, Africa and Asia. Projection. OECD-FAO.</small></div>
+<small>Million tonnes. OECD-FAO projection.</small></div>
 <div class="need reveal" style="--d:.1s"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M5 20 20 7l15 13"/><path d="M9.500 16.500V34h21V16.500"/><path d="M16.500 34V24h7v10"/></svg><p class="eyebrow">Housing</p><b class="num" data-to="2" data-suf="&#215;">2&#215;</b><span>Africa&#8217;s city population by 2050</span>
 <div class="vs"><div><u>2025</u><i style="--w:48.900%"></i><b>720M</b></div><div class="hi"><u>2050</u><i style="--w:100%"></i><b>1.5bn</b></div></div>
-<small>Urban population. Projection. UN World Urbanization Prospects 2025.</small></div>
+<small>Urban population. UN projection.</small></div>
 <div class="need reveal" style="--d:.2s"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M3 27h34"/><path d="M9 34V10M31 34V10"/><path d="M3 18c3 0 5-3 6-8 3 11 7 17 11 17s8-6 11-17c1 5 3 8 6 8"/><path d="M14.500 22.500V27M25.500 22.500V27"/></svg><p class="eyebrow">Infrastructure</p><b class="num" data-to="22" data-pre="~" data-suf="%">~22%</b><span>more steel demand in Africa and Asia by 2030</span>
 <div class="vs"><div><u>2025</u><i style="--w:81.840%"></i><b>329</b></div><div class="hi"><u>2030</u><i style="--w:100%"></i><b>402</b></div></div>
-<small>Million tonnes. Asia is India, ASEAN and other growth Asia. Projection. OECD.</small></div>
+<small>Million tonnes. Asia: India, ASEAN, other growth Asia. OECD projection.</small></div>
 </div>
 
 <div class="sub block reveal"><i>3</i><div><p>Busier ports</p><h3>Their ports are expanding fastest.</h3></div></div>
@@ -755,18 +768,18 @@ h3{font-size:var(--m);line-height:1.25;font-weight:600;letter-spacing:-.015em}
 <button data-r="Africa" class="on">Africa</button>
 <button data-r="Asia">Asia</button>
 </div>
-<p class="phead">Fastest-growing dry bulk ports. Select a port.</p>
+<p class="phead">Select a port.</p>
 <div id="prows"></div>
 </div>
 </div>
-<p class="src reveal">Growth in dry bulk ship calls, 2019 to the average of 2024 and 2025, at ports with at least 300,000 tonnes of dry bulk imports in 2025. Calls count ships, not tonnes. IMF PortWatch.</p>
+<p class="src reveal">Growth in dry bulk ship calls, 2019 to 2024&#8211;25, at ports importing 300,000+ tonnes. IMF PortWatch.</p>
 </div>
 </section>
 
 <section class="sec" id="longer" data-ch="why">
 <div class="wrap">
 <div class="sub reveal"><i>4</i><div><p>Longer voyages</p><h3>Why voyages are getting longer</h3></div></div>
-<p class="note reveal">Select a reason to see the route.</p>
+<p class="note reveal">Pick a reason.</p>
 <div class="longer reveal">
 <div class="pmap">
 <svg id="ymap" viewBox="-104 -68 238 116" role="img" aria-label="World map comparing a shorter and a longer shipping route for the selected reason">
@@ -814,7 +827,7 @@ h3{font-size:var(--m);line-height:1.25;font-weight:600;letter-spacing:-.015em}
 </div>
 <div>
 <div id="cy-chart"></div>
-<p class="hint">Move across the chart to see the value on any day.</p>
+<p class="hint">Hover over the chart for any day.</p>
 </div>
 </div>
 <p class="src">Illustrative and modelled.</p>
@@ -831,7 +844,7 @@ h3{font-size:var(--m);line-height:1.25;font-weight:600;letter-spacing:-.015em}
 <div class="wrap">
 <div class="globe reveal"><canvas id="globe" role="img" aria-label="A rotating globe tracing example dry bulk trade routes"></canvas></div>
 <p class="eyebrow reveal">Navigating maritime value through data</p>
-<h2 class="reveal">For more information, please get in touch.</h2>
+<h2 class="reveal">Get in touch.</h2>
 <div class="ctas reveal">
 <a class="btn" href="mailto:info@tidemarkanalytica.com">info@tidemarkanalytica.com</a>
 </div>
@@ -846,7 +859,7 @@ h3{font-size:var(--m);line-height:1.25;font-weight:600;letter-spacing:-.015em}
 </footer>
 <script>
 const GLOBE={"step":1.5,"counts":[3,9,16,22,28,34,41,47,53,59,65,71,77,83,89,95,100,106,112,117,123,128,133,139,144,149,153,158,163,167,172,176,180,185,188,192,196,200,203,206,209,212,215,218,221,223,225,227,229,231,233,234,235,237,238,238,239,239,240,240,240,240,239,239,238,238,237,235,234,233,231,229,227,225,223,221,218,215,212,209,206,203,200,196,192,188,185,180,176,172,167,163,158,153,149,144,139,133,128,123,117,112,106,100,95,89,83,77,71,65,59,53,47,41,34,28,22,16,9,3],"mask":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAAQAAAAAAAAAAAAAAAAAAAAGAAAAAAAAAAAAAAAAAAAAAAAOAAAAAAAAAAAAAAAAAAAAAACAAwAAAAAAAAAAAAAAAAAAAAAAADwAAAAAAAAAAAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAAAAAAAAAAADAAQAAAAAAAAAAAAAAAMAAAAAAAACABwAAAAAAAAAAAAAAAAAMAAAAAAAA8AAAAAAAAAAAAAAAAIAAEAAAAAAAAOABAAAAAAAAAAAAAAAADAADAAAAAAAA+AEAAAAAAAAAAAAAAAAEAAQAAAAAAADgHwAAAAAAAAAAAAAAAOAAwAAAAAAAAAD8BwAAAAAAAAAAAAAAAPABAAAAAAAAAADwDwAAAAAAAAAAAAAAAMAfAAIAAAAAAAAA/gYAAAAAeAAAAAAAAD7QHwAAAAAAAAAAAPwfAAAAAOAHAAAAAADww/8BAAAAAAAAAADA/wMAAAAA/gAAAAAAAP7/fwAAAAAAAAAAAOD/AwAAAAD/AQAAAAAA/v//AAAAAAAAAAAAgP8PAAAAAPwPAAAAAADw//8HAAAAAAAAAAAA8P8DAAAAgP8DAAAAAAD8//8DAAAAAAAAAAAA8P8DAAAAAP8PDAAAAADw//8HAAAAAAAAAAAAgP9/AAAAAPj/4AAAAAAA//9/AAAAAAAAAAAAAOD/fwAAAAD+PzgAAAAAAP//H4AAAAAAAAAAAADg/38AAAAA/j9wEAAAAAD4/x8AAAAAAAAAAAAAwP//AQAAAPz/wQMAAAAAgP9/AAAAAAAAAAAAAAD+/z8AAADA/384AAAAAADwfwcAAAAAAAAAAAAA4P//DwAAAPD/PwwAAAAAAPCPAwAAAAAAAAAAAAD4//8HAAAA8P9/GAAAAAAAQA8DAAAAAAAAAAAAAPD//x8AAADA//8AAAAAAAAAeAQAAAAAAAAAAAAAwP///wAAAAD8/wcAAAAAAAAAIAAAAAAAAAAAAAAA/v//HwAAAOD/fwAAAAAAAEgAQAAAAAAAAAAAAADA////BwAAAPj/DwAAAAAAMBCgCQgAAAAAAAAAAAD4////AQAAAP//AwAAAADAAgDwgQAAAAAAAAAAAAD+//9/AAAAgP//AAAAAAAQgAB8AAAAAAAAAAAAAAD///8PAAAA4P//AAAAAAAOQMIfAAAAAAAAAAAAAID//38AAAAA+P//AAAAAIDHNyADAAAAAAAAAAAAAID//z8AAAAA+P//AQAAAADDB6QAAAAAAAAAAAAAAAD//wcAAAAA+P//AwAAAIDB7wQAAAAAAAAAAAAAAAD+/wcAAAAA8P//BwAAAMCCDwQAAAAAAAAAAAAAAAD+/wcAAAAA+P//DwAAAKABBwAAAAAAAAAAAAAAAAD//wAAAOCG////DwAAAMAABwAAAAAAAAAAAAAAAID/DwAAAPz/////BwCAABCAEAAAAAAAAAAAAAAAAPT/AQAAgP//////AQAgAAIADgAAAAAAAAAAAAAAYLAfAAAA4P////9/AAADQAhAAAAAAAAAAAAAAAAABh4AAACA/////z8GADgA4IACAAAAAAAAAAAAAAA4AAAAAAD+/////wEA4ADQBwAAAAAAAAAAAAAAAPwAAAAAAPj/////HgDAAeAPAAAAAAAAAAAAAACAfgAAAAAA+P///39+AOAB8AcMAAAAAAAAAAAAAPgHAAAAAAD+////z38A/AB/AAEAAAAAAAAAAADCxwAOAAAA4P///3/+B+Af+BMAAAAAAAAAAAAAAB8GBgAAAID/////+T+A//APAAAAAAAAAAAAAAAfAAMAAACA//////w/4P/9fwAAAAAAAAAAAADABwAAAAAAwP///5//D/z//38CAAAAAAAAAACA/AAAAAAAAPz////8E/D///8XAAAAAAAAAAAA/QEIAAAAAPj////+wf////8HAAAAAAAAAABg/wADAAAAAP7//98///////8AAAAAAAAAAAD+DwgAAAAAwP//v3/+/////wMAAAAAAAAAAPz/DwAAAADg/9//////////AAAAAAAAAADA//8DAAAAAPz/GPj//////w8CAAAAAAAAgP//HwAAAADgfwDg//////8PGgAAAAAAAOD//x8AAAAAwB8Q+P//////kAcAAAAAAAD///8BAAAAwHhA9e//////MwwAAAAAAID///8AAAAAfIDs//n///8fAwEAAAAAAPz//wcAAADgAZD/5////38FAgAAAAAA/P//DwAAAPCBPOf5/////0EAAAAAAOD//38AAADAh/nA8f////+DAAAAAADg//9/AQAAgK8/eP//////EQAAAAAA////LwAAAP5/+vz/////AQAAAADA////ZQAAwP////////8fAAAAAAD///9nAADg/////////38AAAAA8P//PwEAAPj///////+/EAABAOD///4DAKD7////////HwQAAAD+//c/AADP////////HwwAAMD///sHAEAB//////8/wABAAP7/4QcAgEH+/////w84ADDg/wc+AAAE4/////8/MAAc/P+BCwAA8Pz/////QwHw/f8HBwgAeP//////zwH+/38QYADA+f//////B/z/vzAcCHD//////7/8//8ZHgy4+/////+H///P+QHg7+/////z/+kZPwB8/f///8OHLow/AAf6//8sAJwOfwCA/H8PAOAj/AEA6H8AAAiAHwAIHgAAEMEPAIJDAADgHwBAAADgfwAAAADYDwgBANwDAQCAAAAAAAAAAAAA","routes":["M118.58 20.31L118.60 19.60L115.60 9.10L119.50 -1.10L120.05 -8.40L119.90 -14.40L119.40 -17.00L120.00 -19.00L120.00 -25.70L121.30 -27.80L122.90 -31.30L123.20 -37.10L122.18 -37.82L118.17 -38.77L118.52 -38.93","M151.79 32.92L152.25 33.00L153.50 31.00L153.80 27.15L153.40 24.80L152.50 10.00L149.00 7.00L147.00 4.80L140.00 -10.00L140.00 -20.00L130.90 -31.00L128.90 -31.40L129.20 -32.90L130.10 -34.30L129.20 -35.00L130.00 -36.40L129.42 -36.03","M-46.30 23.98L-46.30 24.30L-43.25 23.30L-41.30 23.50L-10.00 30.00L18.00 35.00L22.00 35.00L26.00 34.50L30.52 34.37L39.47 33.61L48.20 32.22L56.63 30.26L60.70 29.09L68.57 26.38L79.66 21.58L86.63 17.99L95.06 13.10L100.00 10.00L104.00 7.00L106.80 5.20L107.30 1.50L109.80 -3.70L110.10 -12.20L108.46 -18.41L109.22 -18.02L110.38 -18.36L111.15 -19.35L111.35 -20.40L110.87 -21.21L110.42 -21.18","M-89.25 -28.99L-89.01 -28.94L-86.00 -22.00L-86.05 -21.73L-79.90 -10.37L-80.00 -9.75L-79.50 -8.60L-79.60 -8.70L-80.00 -7.20L-86.00 -8.80L-89.50 -12.00L-92.09 -12.94L-96.00 -14.30L-106.00 -16.50L-113.28 -22.15L-119.79 -26.59L-126.81 -30.72L-132.85 -33.73L-139.30 -36.42L-144.43 -38.21L-149.79 -39.75L-155.37 -41.05L-163.13 -42.33L-171.13 -43.07L-179.26 -43.25L-187.35 -42.84L-193.32 -42.18L-201.02 -40.82L-210.14 -38.44L-218.60 -35.40L-219.30 -35.92","M-123.12 -49.29L-123.38 -49.07L-122.78 -48.75L-122.74 -48.46L-123.43 -48.16L-129.04 -49.36L-135.50 -50.43L-142.21 -51.14L-149.07 -51.44L-155.97 -51.35L-165.00 -50.60L-172.00 -50.49L-181.16 -49.70L-187.77 -48.65L-194.07 -47.24L-205.30 -44.00L-213.50 -41.00L-218.20 -41.45L-220.40 -41.35L-228.50 -37.20L-230.93 -35.08","M-14.62 -10.65L-14.50 -8.50L-11.50 -5.50L-10.00 0.00L18.00 35.00L22.00 35.00L26.00 34.50L35.01 34.07L39.47 33.61L48.20 32.22L52.46 31.31L60.70 29.09L68.57 26.38L76.05 23.27L83.18 19.82L90.00 16.10L100.00 10.00L104.00 7.00L106.80 5.20L107.30 1.50L109.80 -3.70L110.10 -12.20L114.10 -21.70L117.00 -23.00L120.00 -25.70L121.30 -27.80L122.90 -31.30L123.20 -37.10L122.18 -37.82L121.39 -37.56","M32.07 28.80L32.37 29.23L34.00 26.00L36.00 24.00L41.70 15.00L43.00 12.00L49.40 -5.00L52.30 -11.60L59.00 -20.00L66.60 -24.30L66.98 -24.82L67.33 -24.78","M37.80 -44.70L29.13 -41.24L28.98 -40.97L26.20 -40.10L25.50 -39.40L29.88 -31.20","M-40.25 20.29L-39.50 20.00L-36.20 13.00L-34.70 8.80L-33.80 5.25L-28.09 -9.22L-24.07 -18.82L-19.55 -28.32L-14.60 -37.02L-11.93 -40.98L-8.93 -44.87L-5.50 -48.67L3.40 -51.50L3.90 -52.00L4.05 -51.95","M-58.30 34.58L-58.40 34.20L-56.50 35.10L-54.60 35.25L18.00 35.00L19.80 35.40L18.00 35.00L22.00 35.00L26.00 34.50L30.52 34.37L39.47 33.61L48.20 32.22L56.63 30.26L60.70 29.09L68.57 26.38L79.66 21.58L86.63 17.99L95.06 13.10L100.00 10.00L104.00 7.00L106.80 5.20L106.10 3.00L105.69 2.35L105.06 2.17L104.14 0.59L103.60 -1.10L104.48 -1.34L104.90 -8.40L107.30 -10.00L107.03 -10.50","M114.55 3.40L112.65 6.94L111.90 5.90L110.70 3.60L107.30 1.50L109.80 -3.70L110.10 -12.20L114.10 -21.70L113.62 -22.62","M28.40 -59.68L27.77 -59.48L23.13 -59.75L19.00 -59.40L17.10 -58.50L17.00 -56.40L13.90 -55.00L12.20 -54.50L12.75 -55.90L11.40 -57.70L8.05 -57.95L4.90 -53.50L2.90 -51.90L1.30 -50.80L-5.50 -48.67L-8.93 -44.87L-11.93 -40.98L-14.60 -37.02L-19.55 -28.32L-21.89 -23.59L-26.12 -14.03L-33.80 5.25L-34.70 8.80L-36.20 13.00L-41.30 23.50L-43.25 23.30L-46.30 24.30L-48.50 25.50"]};
-const D={"cards":[{"name":"Food","items":[{"n":"Wheat and grains","u":"Bread, noodles and feed","img":"assets/fbeaf6d26b71.jpg"},{"n":"Rice and farm cargoes","u":"Staples for billions","img":"assets/884cac1f54b5.jpg"},{"n":"Fertiliser","u":"Larger harvests","img":"assets/66380dbd1265.jpg"},{"n":"Soybeans","u":"Cooking oil and feed","img":"assets/498b8563243f.jpg"},{"n":"Sugar","u":"Food and drink","img":"assets/c757b1aa397d.jpg"}]},{"name":"Housing","items":[{"n":"Steel products","u":"Frames and fittings","img":"assets/370ad9746dd8.jpg"},{"n":"Forest products","u":"Timber and panels","img":"assets/01b86d9c3930.jpg"},{"n":"Cement","u":"Homes and foundations","img":"assets/5de7d134fe45.jpg"}]},{"name":"Infrastructure","items":[{"n":"Iron ore","u":"Steel for bridges and rail","img":"assets/82fe460dd172.jpg"},{"n":"Coal","u":"Power and steelmaking","img":"assets/81ee50f957bd.jpg"},{"n":"Copper concentrate","u":"Wiring and power grids","img":"assets/e6d851896198.jpg"},{"n":"Manganese ore","u":"Stronger steel","img":"assets/093e20524ddf.jpg"},{"n":"Other minor bulks","u":"Bauxite, aggregates, scrap, salt","img":null}]}],"ship":{"start":"2026-09-22","end":"2028-03-22","perDay":88.6497},"routes":[{"k":"iron","name":"Iron ore","from":"São Luís, Brazil","to":"Qingdao, China","a":[-44.38,2.57],"b":[120.32,-36.07],"default":false,"path":"M-44.46 2.64L-43.90 1.40L-38.10 3.10L-34.86 4.72L-33.80 5.25L-31.06 7.19L-30.00 7.93L-28.77 8.80L-27.02 10.02L-22.81 12.94L-20.00 14.84L-16.82 16.97L-12.09 20.03L-10.80 20.84L-10.00 21.34L-7.02 23.15L-4.41 24.68L0.00 27.12L2.02 28.17L5.89 30.08L8.74 31.37L10.00 31.93L14.08 33.58L18.00 35.00L22.00 35.00L26.00 34.50L30.52 34.37L35.01 34.07L36.39 33.92L40.00 33.53L42.88 33.13L47.91 32.27L50.00 31.84L51.41 31.53L52.46 31.31L57.36 30.05L59.85 29.33L61.11 28.95L64.68 27.79L66.31 27.20L68.57 26.38L70.00 25.81L72.36 24.87L73.94 24.18L76.05 23.27L77.60 22.54L80.00 21.41L80.90 20.96L82.74 20.04L86.63 17.99L86.99 17.78L86.99 17.78L87.41 17.55L90.00 16.10L93.74 13.88L95.06 13.10L100.00 10.00L104.00 7.00L104.83 6.59L105.42 6.30L105.75 5.98L105.86 5.89L106.46 5.31L106.80 5.20L107.29 3.59L107.25 2.50L107.66 1.54L109.08 -2.20L109.80 -3.70L109.93 -7.55L109.95 -7.95L110.03 -10.17L110.81 -11.26L111.05 -11.61L111.48 -12.52L112.97 -15.73L114.34 -17.57L115.84 -19.67L116.50 -20.60L117.44 -21.92L118.03 -22.69L118.20 -22.93L118.72 -23.58L118.98 -23.95L119.34 -24.45L119.52 -24.71L119.76 -25.09L119.82 -25.24L120.00 -25.70L120.23 -26.08L120.79 -26.98L121.30 -27.80L122.24 -28.58L122.56 -29.38L122.65 -29.62L122.88 -30.18L122.88 -30.35L122.89 -30.90L122.90 -31.30L122.39 -33.13L121.67 -34.58L121.00 -35.90L120.26 -36.03","vb":[-93.0,-70.1,245.6,139.2],"lab0":"Iron ore","lab1":"Steel","img0":"c_iron","img1":"c_steel","stages":[{"t":"Load","p":"São Luís, Brazil","b":"About 170,000 tonnes of iron ore run down the conveyor into the holds.","img":"c_iron"},{"t":"Sail","p":"At sea","b":"About 12,000 nautical miles, roughly 42 days at sea.","img":"st_sea"},{"t":"Unload","p":"Qingdao, China","b":"Unloaded for the steel mills, the start of buildings, bridges and cars.","img":"st_unload"}]},{"k":"coal","name":"Coal","from":"Samarinda, Indonesia","to":"Krishnapatnam, India","a":[117.15,0.5],"b":[80.14,-14.25],"default":false,"path":"M117.59 0.26L117.74 0.62L117.61 0.99L117.17 1.69L116.44 4.17L114.10 4.58L114.10 4.58L113.76 4.48L112.73 4.18L110.15 3.72L109.34 2.32L108.28 2.10L107.66 1.54L105.01 -1.13L104.48 -1.34L104.15 -1.25L103.86 -1.17L103.60 -1.10L102.00 -2.00L101.32 -2.59L100.60 -3.20L99.76 -4.08L98.13 -5.81L94.33 -6.16L85.69 -10.72L84.78 -11.17L83.98 -11.56L83.00 -12.03L81.00 -13.00L80.41 -12.98","vb":[49.4,-28.4,85.3,48.4],"lab0":"Coal","lab1":"Power","img0":"c_coal","img1":"c_coal","stages":[{"t":"Load","p":"Samarinda, Indonesia","b":"About 50,000 tonnes of coal go straight into the holds.","img":"c_coal"},{"t":"Sail","p":"At sea","b":"About 2,800 nautical miles, roughly 10 days at sea.","img":"st_sea"},{"t":"Unload","p":"Krishnapatnam, India","b":"Unloaded for a coastal power station.","img":"st_unload"}]},{"k":"steel","name":"Steel","from":"Tianjin, China","to":"Mombasa, Kenya","a":[117.79,-38.98],"b":[39.67,4.06],"default":false,"path":"M117.85 -38.89L118.97 -38.56L120.48 -38.10L122.18 -37.82L122.76 -37.48L122.72 -36.84L122.78 -35.32L122.81 -34.44L122.83 -34.09L122.85 -33.31L122.90 -31.30L122.89 -30.90L122.88 -30.35L122.88 -30.18L122.65 -29.62L122.56 -29.38L122.24 -28.58L121.30 -27.80L120.79 -26.98L120.23 -26.08L120.00 -25.70L119.82 -25.24L119.76 -25.09L119.52 -24.71L119.34 -24.45L118.98 -23.95L118.72 -23.58L118.20 -22.93L118.03 -22.69L117.44 -21.92L116.50 -20.60L115.84 -19.67L114.34 -17.57L112.97 -15.73L111.48 -12.52L111.05 -11.61L110.81 -11.26L110.03 -10.17L108.70 -8.32L104.48 -1.34L104.15 -1.25L103.86 -1.17L103.60 -1.10L102.00 -2.00L101.32 -2.59L100.60 -3.20L99.76 -4.08L98.13 -5.81L94.33 -6.16L90.00 -6.47L85.95 -6.20L81.90 -5.90L80.10 -5.80L76.55 -4.91L74.82 -4.47L73.56 -4.14L70.00 0.00L67.53 0.00L65.00 0.00L64.90 0.00L64.73 0.00L60.00 0.00L57.54 0.00L55.00 0.00L53.37 0.00L50.00 0.00L47.06 1.28L40.30 4.20L39.83 4.06","vb":[7.0,-55.5,134.7,76.3],"lab0":"Steel","lab1":"Steel","img0":"c_steel","img1":"c_steel","stages":[{"t":"Load","p":"Tianjin, China","b":"About 30,000 tonnes of steel products are lifted aboard.","img":"c_steel"},{"t":"Sail","p":"At sea","b":"About 6,900 nautical miles, roughly 24 days at sea.","img":"st_sea"},{"t":"Unload","p":"Mombasa, Kenya","b":"Unloaded for roads, buildings and factories in East Africa.","img":"st_unload"}]},{"k":"wheat","name":"Wheat","from":"Constanța, Romania","to":"Jakarta, Indonesia","a":[28.66,-44.17],"b":[106.88,6.1],"default":true,"path":"M28.69 -44.17L29.03 -44.07L29.08 -42.79L29.09 -42.54L29.13 -41.24L29.10 -41.19L29.05 -41.15L29.07 -41.12L29.04 -41.05L29.00 -41.03L28.98 -40.97L28.50 -40.82L28.45 -40.81L27.28 -40.60L26.77 -40.44L26.20 -40.10L26.14 -39.99L26.10 -39.78L25.95 -39.49L25.83 -39.24L25.83 -39.14L26.02 -38.89L26.16 -38.72L26.31 -38.52L26.27 -38.44L26.18 -38.34L26.17 -38.25L26.37 -37.81L26.43 -37.27L26.64 -37.01L27.00 -36.55L27.03 -36.50L27.20 -36.20L27.55 -35.88L28.18 -35.30L28.88 -34.66L28.96 -34.58L29.60 -34.00L29.70 -33.90L30.70 -32.99L30.77 -32.93L32.10 -31.70L32.36 -31.34L32.31 -31.10L32.38 -30.32L32.56 -30.21L32.60 -29.70L33.23 -28.44L34.50 -27.00L37.00 -23.60L37.79 -22.21L38.57 -20.81L41.00 -17.10L42.34 -14.51L42.54 -13.68L43.30 -12.70L43.75 -12.40L45.00 -12.00L50.86 -12.88L52.30 -11.60L56.16 -10.82L60.00 -10.00L63.99 -8.57L64.73 -8.29L67.30 -7.35L69.17 -6.64L70.00 -6.32L72.60 -5.33L73.85 -4.85L74.82 -4.47L79.10 -2.79L79.55 -2.61L80.69 -2.16L86.11 0.00L88.90 1.11L90.00 1.55L92.51 2.54L96.72 4.20L99.95 5.45L104.00 7.00L104.83 6.59L105.42 6.30L105.75 5.98L105.86 5.89L106.10 5.82L106.87 5.92L106.88 6.08","vb":[-6.7,-56.0,132.1,74.9],"lab0":"Wheat","lab1":"Noodles","img0":"v_wheat","img1":"v_noodle","stages":[{"t":"Load","p":"Constanța, Romania","b":"About 30,000 tonnes of wheat pour straight into the holds.","img":"v_wheat"},{"t":"Sail","p":"At sea","b":"About 6,300 nautical miles, roughly 22 days at sea.","img":"st_sea"},{"t":"Unload","p":"Jakarta, Indonesia","b":"Cranes lift the wheat out for the flour mills. Enough for roughly 375 million bowls of noodles.","img":"v_noodle"}]},{"k":"fert","name":"Fertiliser","from":"Jorf Lasfar, Morocco","to":"Paradip, India","a":[-8.63,-33.12],"b":[86.68,-20.26],"default":false,"path":"M-8.69 -33.21L-8.75 -33.62L-7.79 -34.08L-7.10 -34.40L-5.75 -35.95L-5.35 -35.97L-5.27 -35.97L-4.70 -36.00L-3.68 -36.16L-3.26 -36.22L-2.59 -36.32L-2.24 -36.38L-1.62 -36.47L-0.37 -36.67L3.10 -37.20L7.50 -37.40L10.37 -37.48L11.00 -37.50L11.17 -37.45L11.83 -37.28L12.09 -37.22L12.11 -37.21L13.26 -36.91L15.20 -36.40L16.73 -36.09L17.90 -35.85L21.41 -35.13L23.00 -34.80L24.93 -34.19L25.48 -34.01L26.31 -33.75L27.93 -33.22L28.21 -33.12L28.91 -32.86L30.41 -32.32L32.10 -31.70L32.36 -31.34L32.31 -31.10L32.38 -30.32L32.56 -30.21L32.60 -29.70L33.23 -28.44L34.50 -27.00L37.00 -23.60L37.79 -22.21L38.57 -20.81L41.00 -17.10L42.34 -14.51L42.54 -13.68L43.30 -12.70L43.75 -12.40L45.00 -12.00L50.86 -12.88L53.62 -13.30L55.04 -12.75L59.89 -11.08L60.83 -10.87L62.06 -10.58L64.30 -10.03L64.70 -9.93L64.99 -9.86L65.70 -9.69L68.86 -8.88L69.33 -8.76L69.67 -8.67L70.00 -8.58L70.82 -8.37L75.97 -6.97L78.02 -6.39L80.10 -5.80L81.90 -5.90L82.25 -7.25L83.63 -10.70L83.98 -11.56L85.04 -14.14L85.16 -14.42L85.74 -15.79L86.49 -17.58L88.00 -21.00","vb":[-43.3,-64.7,151.9,86.1],"lab0":"Fertiliser","lab1":"Harvest","img0":"c_fert","img1":"c_wheat","stages":[{"t":"Load","p":"Jorf Lasfar, Morocco","b":"About 30,000 tonnes of fertiliser pour straight into the holds.","img":"c_fert"},{"t":"Sail","p":"At sea","b":"About 6,800 nautical miles, roughly 24 days at sea.","img":"st_sea"},{"t":"Unload","p":"Paradip, India","b":"Unloaded ahead of the growing season, for bigger harvests.","img":"c_wheat"}]}],"vimgs":{"st_unload":"assets/8d882229fc86.jpg","c_steel":"assets/370ad9746dd8.jpg","st_sea":"assets/89bcbd0490ab.jpg","c_iron":"assets/82fe460dd172.jpg","c_coal":"assets/81ee50f957bd.jpg","v_wheat":"assets/f56cb9ad3db5.jpg","v_noodle":"assets/ee47d6fb00f2.jpg","c_fert":"assets/66380dbd1265.jpg","c_wheat":"assets/fbeaf6d26b71.jpg"},"ports":[{"n":1,"i":1,"region":"Africa","name":"Ngqura","country":"South Africa","g":558,"c0":32,"c1":210,"x":25.69,"y":33.81},{"n":2,"i":2,"region":"Africa","name":"Luanda","country":"Angola","g":286,"c0":37,"c1":143,"x":13.29,"y":8.78},{"n":3,"i":3,"region":"Africa","name":"Freetown","country":"Sierra Leone","g":161,"c0":81,"c1":212,"x":-14.78,"y":-9.89},{"n":4,"i":4,"region":"Africa","name":"El Sokhna","country":"Egypt","g":155,"c0":48,"c1":122,"x":32.35,"y":-29.65},{"n":5,"i":5,"region":"Africa","name":"Monrovia","country":"Liberia","g":150,"c0":31,"c1":78,"x":-10.0,"y":-5.64},{"n":6,"i":6,"region":"Africa","name":"Arzew","country":"Algeria","g":121,"c0":94,"c1":208,"x":-0.38,"y":-35.8},{"n":7,"i":7,"region":"Africa","name":"Port Harcourt","country":"Nigeria","g":94,"c0":70,"c1":136,"x":6.59,"y":-5.51},{"n":8,"i":8,"region":"Africa","name":"Misrata","country":"Libya","g":93,"c0":82,"c1":158,"x":15.22,"y":-32.34},{"n":9,"i":9,"region":"Africa","name":"Djen-Djen","country":"Algeria","g":93,"c0":138,"c1":266,"x":5.94,"y":-36.83},{"n":10,"i":10,"region":"Africa","name":"Port Owendo","country":"Gabon","g":84,"c0":77,"c1":142,"x":9.71,"y":0.08},{"n":11,"i":1,"region":"Asia","name":"Nghi Son","country":"Vietnam","g":944,"c0":83,"c1":866,"x":105.81,"y":-19.35},{"n":12,"i":2,"region":"Asia","name":"Dung Quat","country":"Vietnam","g":428,"c0":99,"c1":523,"x":108.8,"y":-15.4},{"n":13,"i":3,"region":"Asia","name":"Siam Seaport","country":"Thailand","g":263,"c0":90,"c1":326,"x":100.89,"y":-13.12},{"n":14,"i":4,"region":"Asia","name":"Belawan","country":"Indonesia","g":180,"c0":112,"c1":314,"x":98.71,"y":-3.79},{"n":15,"i":5,"region":"Asia","name":"Amamapare","country":"Indonesia","g":155,"c0":72,"c1":184,"x":136.8,"y":4.81},{"n":16,"i":6,"region":"Asia","name":"Subic Bay","country":"Philippines","g":118,"c0":44,"c1":96,"x":117.75,"y":-16.05},{"n":17,"i":7,"region":"Asia","name":"Manila","country":"Philippines","g":117,"c0":366,"c1":794,"x":123.13,"y":-16.01},{"n":18,"i":8,"region":"Asia","name":"Probolinggo","country":"Indonesia","g":116,"c0":70,"c1":152,"x":113.42,"y":7.72},{"n":19,"i":9,"region":"Asia","name":"Calaca","country":"Philippines","g":111,"c0":71,"c1":150,"x":120.42,"y":-12.67},{"n":20,"i":10,"region":"Asia","name":"Kemaman Harbor","country":"Malaysia","g":110,"c0":63,"c1":132,"x":103.46,"y":-4.26}],"views":{"Africa":[-44,-46,128,96],"Asia":[58,-32,86,64.5]}};
+const D={"cards":[{"name":"Food","items":[{"n":"Wheat and grains","u":"Bread, noodles and feed","img":"assets/fbeaf6d26b71.jpg"},{"n":"Rice and farm cargoes","u":"Staples for billions","img":"assets/884cac1f54b5.jpg"},{"n":"Fertiliser","u":"Larger harvests","img":"assets/66380dbd1265.jpg"},{"n":"Soybeans","u":"Cooking oil and feed","img":"assets/498b8563243f.jpg"},{"n":"Sugar","u":"Food and drink","img":"assets/c757b1aa397d.jpg"}]},{"name":"Housing","items":[{"n":"Steel products","u":"Frames and fittings","img":"assets/370ad9746dd8.jpg"},{"n":"Forest products","u":"Timber and panels","img":"assets/01b86d9c3930.jpg"},{"n":"Cement","u":"Homes and foundations","img":"assets/5de7d134fe45.jpg"}]},{"name":"Infrastructure","items":[{"n":"Iron ore","u":"Steel for bridges and rail","img":"assets/82fe460dd172.jpg"},{"n":"Coal","u":"Power and steelmaking","img":"assets/81ee50f957bd.jpg"},{"n":"Copper concentrate","u":"Wiring and power grids","img":"assets/e6d851896198.jpg"},{"n":"Manganese ore","u":"Stronger steel","img":"assets/093e20524ddf.jpg"},{"n":"Other minor bulks","u":"Bauxite, aggregates, scrap, salt","img":null}]}],"ship":{"start":"2026-09-22","end":"2028-03-22","perDay":88.6497},"routes":[{"k":"iron","name":"Iron ore","from":"São Luís, Brazil","to":"Qingdao, China","a":[-44.38,2.57],"b":[120.32,-36.07],"default":false,"path":"M-44.46 2.64L-43.90 1.40L-38.10 3.10L-34.86 4.72L-33.80 5.25L-31.06 7.19L-30.00 7.93L-28.77 8.80L-27.02 10.02L-22.81 12.94L-20.00 14.84L-16.82 16.97L-12.09 20.03L-10.80 20.84L-10.00 21.34L-7.02 23.15L-4.41 24.68L0.00 27.12L2.02 28.17L5.89 30.08L8.74 31.37L10.00 31.93L14.08 33.58L18.00 35.00L22.00 35.00L26.00 34.50L30.52 34.37L35.01 34.07L36.39 33.92L40.00 33.53L42.88 33.13L47.91 32.27L50.00 31.84L51.41 31.53L52.46 31.31L57.36 30.05L59.85 29.33L61.11 28.95L64.68 27.79L66.31 27.20L68.57 26.38L70.00 25.81L72.36 24.87L73.94 24.18L76.05 23.27L77.60 22.54L80.00 21.41L80.90 20.96L82.74 20.04L86.63 17.99L86.99 17.78L86.99 17.78L87.41 17.55L90.00 16.10L93.74 13.88L95.06 13.10L100.00 10.00L104.00 7.00L104.83 6.59L105.42 6.30L105.75 5.98L105.86 5.89L106.46 5.31L106.80 5.20L107.29 3.59L107.25 2.50L107.66 1.54L109.08 -2.20L109.80 -3.70L109.93 -7.55L109.95 -7.95L110.03 -10.17L110.81 -11.26L111.05 -11.61L111.48 -12.52L112.97 -15.73L114.34 -17.57L115.84 -19.67L116.50 -20.60L117.44 -21.92L118.03 -22.69L118.20 -22.93L118.72 -23.58L118.98 -23.95L119.34 -24.45L119.52 -24.71L119.76 -25.09L119.82 -25.24L120.00 -25.70L120.23 -26.08L120.79 -26.98L121.30 -27.80L122.24 -28.58L122.56 -29.38L122.65 -29.62L122.88 -30.18L122.88 -30.35L122.89 -30.90L122.90 -31.30L122.39 -33.13L121.67 -34.58L121.00 -35.90L120.26 -36.03","vb":[-93.0,-70.1,245.6,139.2],"lab0":"Iron ore","lab1":"Steel","img0":"c_iron","img1":"c_steel","stages":[{"t":"Load","p":"São Luís, Brazil","b":"About 170,000 tonnes of iron ore.","img":"c_iron"},{"t":"Sail","p":"At sea","b":"About 12,000 nautical miles, 42 days.","img":"st_sea"},{"t":"Unload","p":"Qingdao, China","b":"For steel mills: buildings, bridges, cars.","img":"st_unload"}]},{"k":"coal","name":"Coal","from":"Samarinda, Indonesia","to":"Krishnapatnam, India","a":[117.15,0.5],"b":[80.14,-14.25],"default":false,"path":"M117.59 0.26L117.74 0.62L117.61 0.99L117.17 1.69L116.44 4.17L114.10 4.58L114.10 4.58L113.76 4.48L112.73 4.18L110.15 3.72L109.34 2.32L108.28 2.10L107.66 1.54L105.01 -1.13L104.48 -1.34L104.15 -1.25L103.86 -1.17L103.60 -1.10L102.00 -2.00L101.32 -2.59L100.60 -3.20L99.76 -4.08L98.13 -5.81L94.33 -6.16L85.69 -10.72L84.78 -11.17L83.98 -11.56L83.00 -12.03L81.00 -13.00L80.41 -12.98","vb":[49.4,-28.4,85.3,48.4],"lab0":"Coal","lab1":"Power","img0":"c_coal","img1":"c_coal","stages":[{"t":"Load","p":"Samarinda, Indonesia","b":"About 50,000 tonnes of coal.","img":"c_coal"},{"t":"Sail","p":"At sea","b":"About 2,800 nautical miles, 10 days.","img":"st_sea"},{"t":"Unload","p":"Krishnapatnam, India","b":"For a coastal power station.","img":"st_unload"}]},{"k":"steel","name":"Steel","from":"Tianjin, China","to":"Mombasa, Kenya","a":[117.79,-38.98],"b":[39.67,4.06],"default":false,"path":"M117.85 -38.89L118.97 -38.56L120.48 -38.10L122.18 -37.82L122.76 -37.48L122.72 -36.84L122.78 -35.32L122.81 -34.44L122.83 -34.09L122.85 -33.31L122.90 -31.30L122.89 -30.90L122.88 -30.35L122.88 -30.18L122.65 -29.62L122.56 -29.38L122.24 -28.58L121.30 -27.80L120.79 -26.98L120.23 -26.08L120.00 -25.70L119.82 -25.24L119.76 -25.09L119.52 -24.71L119.34 -24.45L118.98 -23.95L118.72 -23.58L118.20 -22.93L118.03 -22.69L117.44 -21.92L116.50 -20.60L115.84 -19.67L114.34 -17.57L112.97 -15.73L111.48 -12.52L111.05 -11.61L110.81 -11.26L110.03 -10.17L108.70 -8.32L104.48 -1.34L104.15 -1.25L103.86 -1.17L103.60 -1.10L102.00 -2.00L101.32 -2.59L100.60 -3.20L99.76 -4.08L98.13 -5.81L94.33 -6.16L90.00 -6.47L85.95 -6.20L81.90 -5.90L80.10 -5.80L76.55 -4.91L74.82 -4.47L73.56 -4.14L70.00 0.00L67.53 0.00L65.00 0.00L64.90 0.00L64.73 0.00L60.00 0.00L57.54 0.00L55.00 0.00L53.37 0.00L50.00 0.00L47.06 1.28L40.30 4.20L39.83 4.06","vb":[7.0,-55.5,134.7,76.3],"lab0":"Steel","lab1":"Steel","img0":"c_steel","img1":"c_steel","stages":[{"t":"Load","p":"Tianjin, China","b":"About 30,000 tonnes of steel products.","img":"c_steel"},{"t":"Sail","p":"At sea","b":"About 6,900 nautical miles, 24 days.","img":"st_sea"},{"t":"Unload","p":"Mombasa, Kenya","b":"For roads, buildings and factories.","img":"st_unload"}]},{"k":"wheat","name":"Wheat","from":"Constanța, Romania","to":"Jakarta, Indonesia","a":[28.66,-44.17],"b":[106.88,6.1],"default":true,"path":"M28.69 -44.17L29.03 -44.07L29.08 -42.79L29.09 -42.54L29.13 -41.24L29.10 -41.19L29.05 -41.15L29.07 -41.12L29.04 -41.05L29.00 -41.03L28.98 -40.97L28.50 -40.82L28.45 -40.81L27.28 -40.60L26.77 -40.44L26.20 -40.10L26.14 -39.99L26.10 -39.78L25.95 -39.49L25.83 -39.24L25.83 -39.14L26.02 -38.89L26.16 -38.72L26.31 -38.52L26.27 -38.44L26.18 -38.34L26.17 -38.25L26.37 -37.81L26.43 -37.27L26.64 -37.01L27.00 -36.55L27.03 -36.50L27.20 -36.20L27.55 -35.88L28.18 -35.30L28.88 -34.66L28.96 -34.58L29.60 -34.00L29.70 -33.90L30.70 -32.99L30.77 -32.93L32.10 -31.70L32.36 -31.34L32.31 -31.10L32.38 -30.32L32.56 -30.21L32.60 -29.70L33.23 -28.44L34.50 -27.00L37.00 -23.60L37.79 -22.21L38.57 -20.81L41.00 -17.10L42.34 -14.51L42.54 -13.68L43.30 -12.70L43.75 -12.40L45.00 -12.00L50.86 -12.88L52.30 -11.60L56.16 -10.82L60.00 -10.00L63.99 -8.57L64.73 -8.29L67.30 -7.35L69.17 -6.64L70.00 -6.32L72.60 -5.33L73.85 -4.85L74.82 -4.47L79.10 -2.79L79.55 -2.61L80.69 -2.16L86.11 0.00L88.90 1.11L90.00 1.55L92.51 2.54L96.72 4.20L99.95 5.45L104.00 7.00L104.83 6.59L105.42 6.30L105.75 5.98L105.86 5.89L106.10 5.82L106.87 5.92L106.88 6.08","vb":[-6.7,-56.0,132.1,74.9],"lab0":"Wheat","lab1":"Noodles","img0":"v_wheat","img1":"v_noodle","stages":[{"t":"Load","p":"Constanța, Romania","b":"About 30,000 tonnes of wheat.","img":"v_wheat"},{"t":"Sail","p":"At sea","b":"About 6,300 nautical miles, 22 days.","img":"st_sea"},{"t":"Unload","p":"Jakarta, Indonesia","b":"Enough for about 375 million bowls of noodles.","img":"v_noodle"}]},{"k":"fert","name":"Fertiliser","from":"Jorf Lasfar, Morocco","to":"Paradip, India","a":[-8.63,-33.12],"b":[86.68,-20.26],"default":false,"path":"M-8.69 -33.21L-8.75 -33.62L-7.79 -34.08L-7.10 -34.40L-5.75 -35.95L-5.35 -35.97L-5.27 -35.97L-4.70 -36.00L-3.68 -36.16L-3.26 -36.22L-2.59 -36.32L-2.24 -36.38L-1.62 -36.47L-0.37 -36.67L3.10 -37.20L7.50 -37.40L10.37 -37.48L11.00 -37.50L11.17 -37.45L11.83 -37.28L12.09 -37.22L12.11 -37.21L13.26 -36.91L15.20 -36.40L16.73 -36.09L17.90 -35.85L21.41 -35.13L23.00 -34.80L24.93 -34.19L25.48 -34.01L26.31 -33.75L27.93 -33.22L28.21 -33.12L28.91 -32.86L30.41 -32.32L32.10 -31.70L32.36 -31.34L32.31 -31.10L32.38 -30.32L32.56 -30.21L32.60 -29.70L33.23 -28.44L34.50 -27.00L37.00 -23.60L37.79 -22.21L38.57 -20.81L41.00 -17.10L42.34 -14.51L42.54 -13.68L43.30 -12.70L43.75 -12.40L45.00 -12.00L50.86 -12.88L53.62 -13.30L55.04 -12.75L59.89 -11.08L60.83 -10.87L62.06 -10.58L64.30 -10.03L64.70 -9.93L64.99 -9.86L65.70 -9.69L68.86 -8.88L69.33 -8.76L69.67 -8.67L70.00 -8.58L70.82 -8.37L75.97 -6.97L78.02 -6.39L80.10 -5.80L81.90 -5.90L82.25 -7.25L83.63 -10.70L83.98 -11.56L85.04 -14.14L85.16 -14.42L85.74 -15.79L86.49 -17.58L88.00 -21.00","vb":[-43.3,-64.7,151.9,86.1],"lab0":"Fertiliser","lab1":"Harvest","img0":"c_fert","img1":"c_wheat","stages":[{"t":"Load","p":"Jorf Lasfar, Morocco","b":"About 30,000 tonnes of fertiliser.","img":"c_fert"},{"t":"Sail","p":"At sea","b":"About 6,800 nautical miles, 24 days.","img":"st_sea"},{"t":"Unload","p":"Paradip, India","b":"In time for the growing season.","img":"c_wheat"}]}],"vimgs":{"st_unload":"assets/8d882229fc86.jpg","c_steel":"assets/370ad9746dd8.jpg","st_sea":"assets/89bcbd0490ab.jpg","c_iron":"assets/82fe460dd172.jpg","c_coal":"assets/81ee50f957bd.jpg","v_wheat":"assets/f56cb9ad3db5.jpg","v_noodle":"assets/ee47d6fb00f2.jpg","c_fert":"assets/66380dbd1265.jpg","c_wheat":"assets/fbeaf6d26b71.jpg"},"ports":[{"n":1,"i":1,"region":"Africa","name":"Ngqura","country":"South Africa","g":558,"c0":32,"c1":210,"x":25.69,"y":33.81},{"n":2,"i":2,"region":"Africa","name":"Luanda","country":"Angola","g":286,"c0":37,"c1":143,"x":13.29,"y":8.78},{"n":3,"i":3,"region":"Africa","name":"Freetown","country":"Sierra Leone","g":161,"c0":81,"c1":212,"x":-14.78,"y":-9.89},{"n":4,"i":4,"region":"Africa","name":"El Sokhna","country":"Egypt","g":155,"c0":48,"c1":122,"x":32.35,"y":-29.65},{"n":5,"i":5,"region":"Africa","name":"Monrovia","country":"Liberia","g":150,"c0":31,"c1":78,"x":-10.0,"y":-5.64},{"n":6,"i":6,"region":"Africa","name":"Arzew","country":"Algeria","g":121,"c0":94,"c1":208,"x":-0.38,"y":-35.8},{"n":7,"i":7,"region":"Africa","name":"Port Harcourt","country":"Nigeria","g":94,"c0":70,"c1":136,"x":6.59,"y":-5.51},{"n":8,"i":8,"region":"Africa","name":"Misrata","country":"Libya","g":93,"c0":82,"c1":158,"x":15.22,"y":-32.34},{"n":9,"i":9,"region":"Africa","name":"Djen-Djen","country":"Algeria","g":93,"c0":138,"c1":266,"x":5.94,"y":-36.83},{"n":10,"i":10,"region":"Africa","name":"Port Owendo","country":"Gabon","g":84,"c0":77,"c1":142,"x":9.71,"y":0.08},{"n":11,"i":1,"region":"Asia","name":"Nghi Son","country":"Vietnam","g":944,"c0":83,"c1":866,"x":105.81,"y":-19.35},{"n":12,"i":2,"region":"Asia","name":"Dung Quat","country":"Vietnam","g":428,"c0":99,"c1":523,"x":108.8,"y":-15.4},{"n":13,"i":3,"region":"Asia","name":"Siam Seaport","country":"Thailand","g":263,"c0":90,"c1":326,"x":100.89,"y":-13.12},{"n":14,"i":4,"region":"Asia","name":"Belawan","country":"Indonesia","g":180,"c0":112,"c1":314,"x":98.71,"y":-3.79},{"n":15,"i":5,"region":"Asia","name":"Amamapare","country":"Indonesia","g":155,"c0":72,"c1":184,"x":136.8,"y":4.81},{"n":16,"i":6,"region":"Asia","name":"Subic Bay","country":"Philippines","g":118,"c0":44,"c1":96,"x":117.75,"y":-16.05},{"n":17,"i":7,"region":"Asia","name":"Manila","country":"Philippines","g":117,"c0":366,"c1":794,"x":123.13,"y":-16.01},{"n":18,"i":8,"region":"Asia","name":"Probolinggo","country":"Indonesia","g":116,"c0":70,"c1":152,"x":113.42,"y":7.72},{"n":19,"i":9,"region":"Asia","name":"Calaca","country":"Philippines","g":111,"c0":71,"c1":150,"x":120.42,"y":-12.67},{"n":20,"i":10,"region":"Asia","name":"Kemaman Harbor","country":"Malaysia","g":110,"c0":63,"c1":132,"x":103.46,"y":-4.26}],"views":{"Africa":[-44,-46,128,96],"Asia":[58,-32,86,64.5]}};
 (function(){
 const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
 const fmt=n=>'$'+Math.round(n).toLocaleString('en-US'),clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v)),still=matchMedia('(prefers-reduced-motion:reduce)').matches;
@@ -911,7 +924,7 @@ if(!still)new IntersectionObserver(es=>{const v=es[0].isIntersecting;if(v&&!live
 const P=D.ports,pins=$('#wpins'),wm=$('#wmap'),rows=$('#prows'),card=$('#pcard');let vb=D.views.Africa.slice(),raf=0;
 function view(to){const from=vb.slice(),s=performance.now(),d=still?0:650;cancelAnimationFrame(raf);(function f(n){const p=d?clamp((n-s)/d):1,e=1-Math.pow(1-p,3);vb=from.map((v,i)=>v+(to[i]-v)*e);wm.setAttribute('viewBox',vb.map(v=>v.toFixed(2)).join(' '));if(p<1)raf=requestAnimationFrame(f)})(s)}
 function pick(p){$$('.pin',pins).forEach(g=>g.classList.toggle('on',+g.dataset.n==p.n));$$('.row',rows).forEach(r=>r.classList.toggle('on',+r.dataset.n==p.n));
- card.innerHTML=`<div><b>${p.name}</b><span>${p.country}</span></div><div class="g">+${p.g}%</div><p>${p.c0} dry bulk ship calls in 2019, ${p.c1} a year now</p>`}
+ card.innerHTML=`<div><b>${p.name}</b><span>${p.country}</span></div><div class="g">+${p.g}%</div><p>${p.c0} &#8594; ${p.c1} ship calls a year since 2019</p>`}
 function show(r){const L=P.filter(p=>p.region==r),top=Math.max(...L.map(p=>p.g)),w=D.views[r][2],rad=w*.021;
  pins.innerHTML=L.map(p=>`<g class="pin" data-n="${p.n}" tabindex="0" role="button" aria-label="${p.name}, up ${p.g} percent" transform="translate(${p.x} ${p.y})"><circle class="halo" r="${rad*1.9}"/><circle class="core" r="${rad}"/><text font-size="${rad*1.15}" dy=".05em">${p.i}</text></g>`).join('');
  rows.innerHTML=L.map(p=>`<div class="row" data-n="${p.n}" tabindex="0" role="button"><u>${p.i}</u><span>${p.name}<small>${p.country}</small></span><div class="t"><i style="--w:${p.g/top*100}%"></i></div><b>+${p.g}%</b></div>`).join('');
